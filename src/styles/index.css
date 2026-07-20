@@ -1,0 +1,373 @@
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #F8FAFC;
+  --surface: #FFFFFF;
+  --surface-2: #F1F5F9;
+  --surface-3: #E2E8F0;
+  --border: #E2E8F0;
+  --border-soft: #CBD5E1;
+  --border-2: #E2E8F0;
+  --text: #0F172A;
+  --text-sub: #334155;
+  --text-mute: #64748B;
+  --text-ghost: #94A3B8;
+  --accent: #1A5FA8;
+  --accent-dark: #114D8D;
+  --accent-grad2: #114D8D;
+  --accent-soft: #F0F6FC;
+  --accent-soft2: #E1EDFB;
+  --surface-hover: #F4F8FC;
+  --shadow: 0 4px 18px rgba(15,23,42,.04);
+  --shadow-lg: 0 10px 32px rgba(15,23,42,.08);
+  --overlay: rgba(15,20,35,.45);
+}
+
+[data-theme="dark"] {
+  --bg: #0C101D;
+  --surface: #151B2C;
+  --surface-2: #1D243A;
+  --surface-3: #242D45;
+  --border: #202A44;
+  --border-soft: #2D3958;
+  --border-2: #253152;
+  --text: #F8FAFC;
+  --text-sub: #E2E8F0;
+  --text-mute: #94A3B8;
+  --text-ghost: #64748B;
+  --accent: #3B82F6;
+  --accent-dark: #2563EB;
+  --accent-grad2: #1D4ED8;
+  --accent-soft: #141f35;
+  --accent-soft2: #1e2d4a;
+  --surface-hover: #1F273F;
+  --shadow: 0 4px 20px rgba(0,0,0,.4);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,.55);
+  --overlay: rgba(0,0,0,.65);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Sarabun', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.2s, color 0.2s;
+  min-height: 100vh;
+}
+
+input, select, button, textarea {
+  font-family: inherit;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--accent-soft) !important;
+}
+
+.row-hover:hover {
+  background: var(--surface-hover) !important;
+}
+
+.btn-pri {
+  transition: opacity .15s, transform .1s;
+}
+
+.btn-pri:hover {
+  opacity: .9;
+}
+
+.btn-pri:active {
+  transform: scale(.97);
+}
+
+.btn-sec:hover {
+  background: var(--surface-hover) !important;
+}
+
+.si:hover {
+  background: var(--surface-hover) !important;
+}
+
+.si-active {
+  background: var(--accent-soft) !important;
+}
+
+/* ── Tooltip system ── */
+.tt {
+  position: relative;
+  display: inline-flex;
+}
+
+.tt::after {
+  content: attr(data-tip);
+  position: absolute;
+  background: #1E293B;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 7px;
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .15s .1s;
+  z-index: 9000;
+  line-height: 1.4;
+}
+
+.tt::before {
+  content: "";
+  position: absolute;
+  border: 5px solid transparent;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .15s .1s;
+  z-index: 9001;
+}
+
+.tt:hover::after,
+.tt:hover::before {
+  opacity: 1;
+}
+
+.tt-r::after {
+  left: calc(100% + 9px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.tt-r::before {
+  left: calc(100% + 0px);
+  top: 50%;
+  transform: translateY(-50%);
+  border-right-color: #1E293B;
+}
+
+.tt-t::after {
+  bottom: calc(100% + 9px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tt-t::before {
+  bottom: calc(100% + 0px);
+  left: 50%;
+  transform: translateX(-50%);
+  border-top-color: #1E293B;
+}
+
+.tt-b::after {
+  top: calc(100% + 9px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tt-b::before {
+  top: calc(100% + 0px);
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom-color: #1E293B;
+}
+
+.tt-l::after {
+  right: calc(100% + 9px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.tt-l::before {
+  right: calc(100% + 0px);
+  top: 50%;
+  transform: translateY(-50%);
+  border-left-color: #1E293B;
+}
+
+/* sidebar legacy */
+.tip-wrap {
+  position: relative;
+  display: block;
+}
+
+.tip {
+  position: absolute;
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: #1E293B;
+  color: #fff;
+  padding: 4px 9px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .15s;
+  z-index: 600;
+}
+
+.tip-wrap:hover .tip {
+  opacity: 1;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fu {
+  animation: fadeUp .2s ease;
+}
+
+/* ── Mobile Responsive Helpers ── */
+@media (max-width: 768px) {
+  /* Force grid layouts to stack vertically on mobile */
+  div[style*="display: grid"],
+  div[style*="display:grid"] {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Avoid breaking calendar grids */
+  div[style*="grid-template-columns: repeat(7"],
+  div[style*="grid-template-columns:repeat(7"],
+  div[style*="grid-template-columns: 56px repeat(7"],
+  div[style*="grid-template-columns:56px repeat(7"] {
+    grid-template-columns: 50px repeat(7, 1fr) !important;
+    overflow-x: auto;
+  }
+  
+  /* Make dashboard stats container display cleanly */
+  div[style*="grid-template-columns: repeat(auto-fit"],
+  div[style*="grid-template-columns:repeat(auto-fit"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Form spacing and layout overrides for double columns */
+  div[style*="grid-template-columns: 1fr 1fr"],
+  div[style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Make tables responsive */
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  /* Adjust page body padding */
+  main {
+    padding: 16px 14px !important;
+  }
+
+  /* --- Mobile Typography & Readability Enhancements --- */
+  
+  /* Fix iOS double-tap zoom & tiny fonts on input fields */
+  input, select, textarea {
+    font-size: 15.5px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Prevent inline small styles from being too small (e.g. 10px, 11px, 12px) */
+  [style*="font-size: 10px"], [style*="font-size:10px"],
+  [style*="font-size: 11px"], [style*="font-size:11px"],
+  [style*="font-size: 12px"], [style*="font-size:12px"],
+  [style*="font-size:0.75rem"], [style*="font-size: 0.75rem"],
+  [style*="font-size:0.7rem"], [style*="font-size: 0.7rem"] {
+    font-size: 13px !important;
+  }
+
+  [style*="font-size: 13px"], [style*="font-size:13px"],
+  [style*="font-size:0.8rem"], [style*="font-size: 0.8rem"] {
+    font-size: 14px !important;
+  }
+
+  /* Boost text weight slightly on mobile screens to counteract light-weight anti-aliasing */
+  body, p, span, label, td, th, input, select, textarea {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Mobile text contrast optimization in dark mode */
+  [data-theme="dark"] {
+    --text: #FFFFFF;
+    --text-sub: #F1F5F9;
+    --text-mute: #E2E8F0;
+    --text-ghost: #CBD5E1;
+  }
+
+  /* --- Booking Calendar Responsive Styles --- */
+  .booking-toolbar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 14px 16px !important;
+    gap: 12px !important;
+  }
+
+  .booking-pagination {
+    justify-content: space-between !important;
+    width: 100% !important;
+  }
+
+  .booking-title {
+    text-align: center !important;
+    font-size: 16px !important;
+    margin: 4px 0 !important;
+  }
+
+  .booking-search {
+    width: 100% !important;
+  }
+
+  .booking-view-switch {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  
+  .booking-view-switch button {
+    flex: 1 !important;
+    text-align: center !important;
+  }
+}
+
+/* --- Dropdown Hover Highlights (Cover Effect) --- */
+.custom-select-item {
+  transition: background 0.1s ease, color 0.1s ease !important;
+  cursor: pointer !important;
+}
+.custom-select-item:hover,
+.fu button:hover,
+.fu div[style*="cursor: pointer"]:hover {
+  background: var(--surface-2) !important;
+  color: var(--text) !important;
+  cursor: pointer !important;
+}
+.fu button,
+.fu div[style*="cursor: pointer"] {
+  cursor: pointer !important;
+}
+
+select:not(:disabled),
+option {
+  cursor: pointer !important;
+}
