@@ -49,6 +49,439 @@ const IS_STYLE = {
   height: 42
 };
 
+const CHART_COLORS = [
+  "#3B82F6", // Blue
+  "#8B5CF6", // Purple
+  "#EC4899", // Pink
+  "#10B981", // Emerald
+  "#F59E0B", // Amber
+  "#EF4444", // Red
+  "#06B6D4", // Cyan
+  "#6366F1", // Indigo
+  "#84CC16", // Lime
+  "#14B8A6"  // Teal
+];
+
+interface ChartItem {
+  label: string;
+  value: number;
+}
+
+const RenderSVGChart: React.FC<{
+  type: "bar" | "donut" | "line";
+  data: ChartItem[];
+  hoveredIdx: number | null;
+  setHoveredIdx: (idx: number | null) => void;
+  colorScheme?: "primary" | "secondary";
+}> = ({ type, data, hoveredIdx, setHoveredIdx, colorScheme = "primary" }) => {
+  if (!data || data.length === 0) {
+    return (
+      <div style={{ height: 200, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "var(--text-ghost)" }}>
+        <Icon n="alert-circle" s={{ fontSize: 24, marginBottom: 8, color: "var(--text-mute)" }} />
+        <span style={{ fontSize: 13 }}>ไม่มีข้อมูลแสดงผลในแผนภูมินี้</span>
+      </div>
+    );
+  }
+
+  const cleanData = data.map(d => ({ label: d.label, value: Math.max(0, d.value) }));
+  const maxVal = Math.max(...cleanData.map(d => d.value), 1);
+  const total = cleanData.reduce((acc, curr) => acc + curr.value, 0) || 1;
+
+  const width = 500;
+  const height = 240;
+  const paddingLeft = 45;
+  const paddingRight = 15;
+  const paddingTop = 25;
+  const paddingBottom = 45;
+  const chartW = width - paddingLeft - paddingRight;
+  const chartH = height - paddingTop - paddingBottom;
+
+  if (type === "bar") {
+    const barW = Math.max(10, Math.min(45, (chartW / cleanData.length) * 0.55));
+    const gap = (chartW - barW * cleanData.length) / (cleanData.length + 1);
+
+    return (
+      <svg width="100%" height="100%" viewBox={`0 0 ${width} ${height}`} style={{ overflow: "visible" }}>
+        <defs>
+          <linearGradient id="barGradPrimary" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#3B82F6" />
+            <stop offset="100%" stopColor="#60A5FA" stopOpacity={0.4} />
+          </linearGradient>
+          <linearGradient id="barGradSecondary" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#8B5CF6" />
+            <stop offset="100%" stopColor="#C084FC" stopOpacity={0.4} />
+          </linearGradient>
+        </defs>
+
+        {[0, 0.25, 0.5, 0.75, 1].map((ratio, i) => {
+          const yPos = paddingTop + chartH * (1 - ratio);
+          return (
+            <g key={i}>
+              <line
+                x1={paddingLeft}
+                y1={yPos}
+                x2={width - paddingRight}
+                y2={yPos}
+                stroke="var(--border-soft)"
+                strokeDasharray="4 4"
+                strokeWidth={1}
+              />
+              <text
+                x={paddingLeft - 8}
+                y={yPos + 4}
+                textAnchor="end"
+                style={{ fontSize: 10, fill: "var(--text-mute)" }}
+              >
+                {Math.round(maxVal * ratio)}
+              </text>
+            </g>
+          );
+        })}
+
+        {cleanData.map((d, i) => {
+          const barH = (d.value / maxVal) * chartH;
+          const x = paddingLeft + gap + i * (barW + gap);
+          const y = paddingTop + chartH - barH;
+          const isHovered = hoveredIdx === i;
+
+          return (
+            <g
+              key={i}
+              onMouseEnter={() => setHoveredIdx(i)}
+              onMouseLeave={() => setHoveredIdx(null)}
+              style={{ cursor: "pointer" }}
+            >
+              <rect
+                x={x}
+                y={y}
+                width={barW}
+                height={Math.max(1, barH)}
+                rx={4}
+                ry={4}
+                fill={colorScheme === "primary" ? "url(#barGradPrimary)" : "url(#barGradSecondary)"}
+                stroke={isHovered ? (colorScheme === "primary" ? "#2563EB" : "#7C3AED") : "transparent"}
+                strokeWidth={1.5}
+                style={{ transition: "all 0.15s ease-out" }}
+              />
+
+              {isHovered && (
+                <rect
+                  x={x - 2}
+                  y={y - 2}
+                  width={barW + 4}
+                  height={Math.max(1, barH) + 2}
+                  rx={6}
+                  ry={6}
+                  fill={colorScheme === "primary" ? "#3B82F6" : "#8B5CF6"}
+                  fillOpacity={0.15}
+                  pointerEvents="none"
+                />
+              )}
+
+              <text
+                x={x + barW / 2}
+                y={height - paddingBottom + 16}
+                textAnchor="middle"
+                style={{
+                  fontSize: cleanData.length > 8 ? 8.5 : 10,
+                  fill: "var(--text-sub)",
+                  fontWeight: isHovered ? 700 : 500
+                }}
+                transform={`rotate(-15, ${x + barW / 2}, ${height - paddingBottom + 16})`}
+              >
+                {d.label.length > 12 ? d.label.substring(0, 10) + "..." : d.label}
+              </text>
+
+              {isHovered && (
+                <g pointerEvents="none">
+                  <rect
+                    x={Math.max(4, x + barW / 2 - 50)}
+                    y={Math.max(2, y - 28)}
+                    width={100}
+                    height={22}
+                    rx={6}
+                    fill="var(--text)"
+                    style={{ filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.15))" }}
+                  />
+                  <polygon
+                    points={`${x + barW / 2 - 4},${y - 6} ${x + barW / 2 + 4},${y - 6} ${x + barW / 2},${y - 2}`}
+                    fill="var(--text)"
+                  />
+                  <text
+                    x={x + barW / 2}
+                    y={y - 13}
+                    textAnchor="middle"
+                    style={{ fill: "var(--surface)", fontSize: 10.5, fontWeight: 700 }}
+                  >
+                    {d.value}
+                  </text>
+                </g>
+              )}
+            </g>
+          );
+        })}
+      </svg>
+    );
+  }
+
+  if (type === "donut") {
+    const r = 60;
+    const circ = 2 * Math.PI * r;
+    const cx = 135;
+    const cy = 120;
+
+    let cumulativePercent = 0;
+
+    return (
+      <div style={{ display: "flex", alignItems: "center", width: "100%", height: "100%", gap: 10 }}>
+        <div style={{ position: "relative", width: 250, height: 220, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          <svg width="230" height="220" viewBox="0 0 270 240" style={{ overflow: "visible" }}>
+            {cleanData.map((d, i) => {
+              const percent = d.value / total;
+              const strokeLength = percent * circ;
+              const strokeOffset = circ - strokeLength + cumulativePercent * circ;
+              cumulativePercent += percent;
+              const isHovered = hoveredIdx === i;
+              const sliceColor = CHART_COLORS[i % CHART_COLORS.length];
+
+              return (
+                <circle
+                  key={i}
+                  cx={cx}
+                  cy={cy}
+                  r={r}
+                  fill="transparent"
+                  stroke={sliceColor}
+                  strokeWidth={isHovered ? 26 : 20}
+                  strokeDasharray={circ}
+                  strokeDashoffset={strokeOffset}
+                  transform={`rotate(-90 ${cx} ${cy})`}
+                  style={{
+                    transition: "stroke-width 0.15s ease-out, stroke 0.15s ease-out",
+                    cursor: "pointer"
+                  }}
+                  onMouseEnter={() => setHoveredIdx(i)}
+                  onMouseLeave={() => setHoveredIdx(null)}
+                />
+              );
+            })}
+
+            <circle cx={cx} cy={cy} r={r - 12} fill="var(--surface)" />
+
+            <text x={cx} y={cy - 4} textAnchor="middle" style={{ fill: "var(--text-mute)", fontSize: 11, fontWeight: 500 }}>
+              รวมทั้งหมด
+            </text>
+            <text x={cx} y={cy + 16} textAnchor="middle" style={{ fill: "var(--text)", fontSize: 19, fontWeight: 800 }}>
+              {total}
+            </text>
+          </svg>
+        </div>
+
+        <div style={{ flexGrow: 1, maxHeight: 190, overflowY: "auto", paddingRight: 6, display: "flex", flexDirection: "column", gap: 8 }}>
+          {cleanData.map((d, i) => {
+            const isHovered = hoveredIdx === i;
+            const pct = Math.round((d.value / total) * 100);
+            const sliceColor = CHART_COLORS[i % CHART_COLORS.length];
+
+            return (
+              <div
+                key={i}
+                onMouseEnter={() => setHoveredIdx(i)}
+                onMouseLeave={() => setHoveredIdx(null)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "5px 8px",
+                  borderRadius: 6,
+                  background: isHovered ? "var(--border-soft)" : "transparent",
+                  cursor: "pointer",
+                  transition: "background 0.12s"
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <div style={{ width: 10, height: 10, borderRadius: "50%", background: sliceColor, flexShrink: 0 }} />
+                  <span style={{ fontSize: 12, color: "var(--text-sub)", fontWeight: isHovered ? 700 : 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: 140 }}>
+                    {d.label}
+                  </span>
+                </div>
+                <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                  <span style={{ fontSize: 11, color: "var(--text-mute)" }}>{d.value}</span>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "var(--accent)" }}>{pct}%</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  if (type === "line") {
+    const points = cleanData.map((d, i) => {
+      const x = paddingLeft + (i * chartW) / Math.max(1, cleanData.length - 1);
+      const y = paddingTop + chartH - (d.value / maxVal) * chartH;
+      return { x, y };
+    });
+
+    const pathD = points.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ");
+
+    const areaD = points.length > 0
+      ? `${pathD} L ${points[points.length - 1].x} ${paddingTop + chartH} L ${points[0].x} ${paddingTop + chartH} Z`
+      : "";
+
+    return (
+      <svg width="100%" height="100%" viewBox={`0 0 ${width} ${height}`} style={{ overflow: "visible" }}>
+        <defs>
+          <linearGradient id="areaGradPrimary" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#3B82F6" stopOpacity={0.3} />
+            <stop offset="100%" stopColor="#60A5FA" stopOpacity={0.0} />
+          </linearGradient>
+          <linearGradient id="areaGradSecondary" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#8B5CF6" stopOpacity={0.3} />
+            <stop offset="100%" stopColor="#C084FC" stopOpacity={0.0} />
+          </linearGradient>
+        </defs>
+
+        {[0, 0.25, 0.5, 0.75, 1].map((ratio, i) => {
+          const yPos = paddingTop + chartH * (1 - ratio);
+          return (
+            <g key={i}>
+              <line
+                x1={paddingLeft}
+                y1={yPos}
+                x2={width - paddingRight}
+                y2={yPos}
+                stroke="var(--border-soft)"
+                strokeDasharray="4 4"
+                strokeWidth={1}
+              />
+              <text
+                x={paddingLeft - 8}
+                y={yPos + 4}
+                textAnchor="end"
+                style={{ fontSize: 10, fill: "var(--text-mute)" }}
+              >
+                {Math.round(maxVal * ratio)}
+              </text>
+            </g>
+          );
+        })}
+
+        {areaD && (
+          <path
+            d={areaD}
+            fill={colorScheme === "primary" ? "url(#areaGradPrimary)" : "url(#areaGradSecondary)"}
+            pointerEvents="none"
+          />
+        )}
+
+        {pathD && (
+          <path
+            d={pathD}
+            fill="none"
+            stroke={colorScheme === "primary" ? "#3B82F6" : "#8B5CF6"}
+            strokeWidth={3}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            pointerEvents="none"
+          />
+        )}
+
+        {points.map((p, i) => {
+          const isHovered = hoveredIdx === i;
+          const d = cleanData[i];
+
+          return (
+            <g
+              key={i}
+              onMouseEnter={() => setHoveredIdx(i)}
+              onMouseLeave={() => setHoveredIdx(null)}
+              style={{ cursor: "pointer" }}
+            >
+              {isHovered && (
+                <line
+                  x1={p.x}
+                  y1={paddingTop}
+                  x2={p.x}
+                  y2={paddingTop + chartH}
+                  stroke="var(--accent)"
+                  strokeWidth={1}
+                  strokeDasharray="3 3"
+                  pointerEvents="none"
+                />
+              )}
+
+              {isHovered && (
+                <circle
+                  cx={p.x}
+                  cy={p.y}
+                  r={8}
+                  fill={colorScheme === "primary" ? "#3B82F6" : "#8B5CF6"}
+                  fillOpacity={0.2}
+                  pointerEvents="none"
+                />
+              )}
+
+              <circle
+                cx={p.x}
+                cy={p.y}
+                r={isHovered ? 5 : 4}
+                fill={isHovered ? "#FFF" : (colorScheme === "primary" ? "#3B82F6" : "#8B5CF6")}
+                stroke={colorScheme === "primary" ? "#3B82F6" : "#8B5CF6"}
+                strokeWidth={2}
+                style={{ transition: "all 0.15s ease-out" }}
+              />
+
+              <text
+                x={p.x}
+                y={height - paddingBottom + 16}
+                textAnchor="middle"
+                style={{
+                  fontSize: cleanData.length > 8 ? 8.5 : 10,
+                  fill: "var(--text-sub)",
+                  fontWeight: isHovered ? 700 : 500
+                }}
+                transform={`rotate(-15, ${p.x}, ${height - paddingBottom + 16})`}
+              >
+                {d.label.length > 12 ? d.label.substring(0, 10) + "..." : d.label}
+              </text>
+
+              {isHovered && (
+                <g pointerEvents="none">
+                  <rect
+                    x={Math.max(4, p.x - 50)}
+                    y={Math.max(2, p.y - 28)}
+                    width={100}
+                    height={22}
+                    rx={6}
+                    fill="var(--text)"
+                    style={{ filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.15))" }}
+                  />
+                  <polygon
+                    points={`${p.x - 4},${p.y - 6} ${p.x + 4},${p.y - 6} ${p.x},${p.y - 2}`}
+                    fill="var(--text)"
+                  />
+                  <text
+                    x={p.x}
+                    y={p.y - 13}
+                    textAnchor="middle"
+                    style={{ fill: "var(--surface)", fontSize: 10.5, fontWeight: 700 }}
+                  >
+                    {d.value}
+                  </text>
+                </g>
+              )}
+            </g>
+          );
+        })}
+      </svg>
+    );
+  }
+
+  return null;
+};
+
 const REPORTS_LIST = [
   { id: 1, label: "1. รายงานอัตราการครองห้องประชุมสะสม (Average Occupancy Rate)" },
   { id: 2, label: "2. รายงานช่วงเวลายอดฮิตในการจอง (Peak Booking Hours)" },
@@ -100,6 +533,12 @@ export const Reports: React.FC = () => {
   });
   const [deptFilter, setDeptFilter] = useState("all");
   const [roomFilter, setRoomFilter] = useState("all");
+
+  // ── สเตทการควบคุมแผนภูมิและทูลทิป (Dynamic Charting Controls) ──
+  const [chartTypeLeft, setChartTypeLeft] = useState<"bar" | "donut" | "line">("donut");
+  const [chartTypeRight, setChartTypeRight] = useState<"bar" | "donut" | "line">("bar");
+  const [hoveredIdxLeft, setHoveredIdxLeft] = useState<number | null>(null);
+  const [hoveredIdxRight, setHoveredIdxRight] = useState<number | null>(null);
 
   // ── สเตทการจำลองโหลดดาวน์โหลดไฟล์ ──
   const [pdfLoading, setPdfLoading] = useState(false);
@@ -781,6 +1220,108 @@ export const Reports: React.FC = () => {
     });
   }, [filteredAgendas, db.users]);
 
+  // ── ดึงข้อมูลแผนภูมิซ้าย-ขวาอย่างยืดหยุ่น (Flexible Chart Data Selector) ──
+  const chartDataLeft = useMemo(() => {
+    // กราฟซ้ายเน้นร้อยละ/สัดส่วน (%) หรือสเกลเปรียบเทียบเชิงสัมพัทธ์
+    switch (selectedReportId) {
+      case 1:
+        return report1Data.map(d => ({ label: d.name, value: d.rate }));
+      case 2:
+        return report2Data.map(d => ({ label: d.slot, value: d.pct }));
+      case 3:
+        return report3Data.map(d => ({ label: d.name, value: d.densityPct }));
+      case 4:
+        return report4Data.map(d => ({ label: d.type, value: d.pct }));
+      case 5:
+        return report5Data.map(d => ({ label: d.name, value: d.bookingsCount > 0 ? Math.round((d.ghostCount / d.bookingsCount) * 100) : 0 }));
+      case 6:
+        {
+          const total = report6Data.reduce((acc, curr) => acc + curr.count, 0) || 1;
+          return report6Data.map(d => ({ label: d.name, value: Math.round((d.count / total) * 100) }));
+        }
+      case 7:
+        {
+          const total = report7Data.reduce((acc, curr) => acc + curr.count, 0) || 1;
+          return report7Data.map(d => ({ label: d.name, value: Math.round((d.count / total) * 100) }));
+        }
+      case 9:
+        return report9Data.map(d => ({ label: d.name, value: d.pct }));
+      case 10:
+        return report10Data.map(d => ({ label: d.title, value: d.pct }));
+      case 11:
+        {
+          const avgs = report11Data.map(d => parseFloat(d.avg) || 0);
+          const maxDays = Math.max(...avgs, 1);
+          return report11Data.map((d, idx) => ({ label: d.dept, value: Math.round((avgs[idx] / maxDays) * 100) }));
+        }
+      case 13:
+        return report13Data.map(d => ({ label: d.dept, value: d.pct }));
+      case 14:
+        {
+          const total = report14Data.reduce((acc, curr) => acc + Number(curr.manHours), 0) || 1;
+          return report14Data.map(d => ({ label: d.dept, value: Math.round((Number(d.manHours) / total) * 100) }));
+        }
+      case 15:
+        {
+          const total = report15Data.length || 1;
+          const overrunCount = report15Data.filter(d => d.overrun !== "ตรงเวลา").length;
+          return [
+            { label: "ตรงเวลา", value: Math.round(((total - overrunCount) / total) * 100) },
+            { label: "ยืดเยื้อเกินกำหนด", value: Math.round((overrunCount / total) * 100) }
+          ];
+        }
+      case 16:
+        {
+          const maxScore = Math.max(...report16Data.map(d => parseInt(d.score)), 100);
+          return report16Data.map(d => ({ label: d.title, value: Math.round((parseInt(d.score) / maxScore) * 100) }));
+        }
+      default:
+        return [];
+    }
+  }, [selectedReportId, report1Data, report2Data, report3Data, report4Data, report5Data, report6Data, report7Data, report9Data, report10Data, report11Data, report13Data, report14Data, report15Data, report16Data]);
+
+  const chartDataRight = useMemo(() => {
+    // กราฟขวาเน้นค่าตัวเลขปริมาณดิบ (Absolute Volume/Count)
+    switch (selectedReportId) {
+      case 1:
+        return report1Data.map(d => ({ label: d.name, value: d.count }));
+      case 2:
+        return report2Data.map(d => ({ label: d.slot, value: d.count }));
+      case 3:
+        return report3Data.map(d => ({ label: d.name, value: d.avgParticipants }));
+      case 4:
+        return report4Data.map(d => ({ label: d.type, value: d.count }));
+      case 5:
+        return report5Data.map(d => ({ label: d.name, value: d.ghostCount }));
+      case 6:
+        return report6Data.map(d => ({ label: d.name, value: d.count }));
+      case 7:
+        return report7Data.map(d => ({ label: d.name, value: d.count }));
+      case 9:
+        return report9Data.map(d => ({ label: d.name, value: d.pending }));
+      case 10:
+        return report10Data.map(d => ({ label: d.title, value: d.total }));
+      case 11:
+        return report11Data.map(d => ({ label: d.dept, value: parseFloat(d.avg) || 0 }));
+      case 13:
+        return report13Data.map(d => ({ label: d.dept, value: d.total }));
+      case 14:
+        return report14Data.map(d => ({ label: d.dept, value: Number(d.manHours) }));
+      case 15:
+        {
+          const overruns = report15Data.map(d => {
+            const num = parseInt(d.overrun);
+            return isNaN(num) ? 0 : num;
+          });
+          return report15Data.map((d, idx) => ({ label: d.title, value: overruns[idx] }));
+        }
+      case 16:
+        return report16Data.map(d => ({ label: d.title, value: d.fileCount }));
+      default:
+        return [];
+    }
+  }, [selectedReportId, report1Data, report2Data, report3Data, report4Data, report5Data, report6Data, report7Data, report9Data, report10Data, report11Data, report13Data, report14Data, report15Data, report16Data]);
+
 
   // ==========================================
   // [ส่วนหัวรวมและตัวเลขสรุปสะสม]
@@ -1060,6 +1601,138 @@ export const Reports: React.FC = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* ── แผนภูมิรายงานสถิติแบบอินเตอร์แอคทีฟ (Interactive Report Charting Cards Panel) ── */}
+      <div 
+        style={{ 
+          display: "grid", 
+          gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))", 
+          gap: 24, 
+          marginBottom: 24 
+        }}
+      >
+        {/* การ์ดฝั่งซ้าย: อัตราส่วนและสัดส่วนสัมพัทธ์ */}
+        <div 
+          style={{ 
+            background: "var(--surface)", 
+            border: "1px solid var(--border)", 
+            borderRadius: 16, 
+            padding: 24, 
+            boxShadow: "var(--shadow)",
+            display: "flex",
+            flexDirection: "column"
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ width: 28, height: 28, background: "var(--accent-soft)", borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Icon n="pie-chart" s={{ fontSize: 13, color: "var(--accent)" }} />
+              </div>
+              <h4 style={{ fontSize: 14, fontWeight: 700, color: "var(--text)", margin: 0 }}>วิเคราะห์สัดส่วนอัตราส่วน (%)</h4>
+            </div>
+            
+            {/* ปุ่มเลือกประเภทกราฟ (Chart Type Selector Pills) */}
+            <div style={{ display: "flex", background: "var(--surface-2)", borderRadius: 8, padding: 3, border: "1px solid var(--border)" }}>
+              {([
+                { id: "bar", icon: "bar-chart" },
+                { id: "donut", icon: "pie-chart" },
+                { id: "line", icon: "trending-up" }
+              ] as const).map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => setChartTypeLeft(t.id)}
+                  style={{
+                    border: "none",
+                    background: chartTypeLeft === t.id ? "var(--accent)" : "transparent",
+                    color: chartTypeLeft === t.id ? "#FFF" : "var(--text-mute)",
+                    padding: "5px 10px",
+                    borderRadius: 6,
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    transition: "all 0.15s"
+                  }}
+                  title={t.id === "bar" ? "กราฟแท่ง" : t.id === "donut" ? "กราฟโดนัท" : "กราฟเส้น"}
+                >
+                  <Icon n={t.icon} s={{ fontSize: 13, color: chartTypeLeft === t.id ? "#FFF" : "inherit" }} />
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ flexGrow: 1, minHeight: 220, position: "relative" }}>
+            <RenderSVGChart
+              type={chartTypeLeft}
+              data={chartDataLeft}
+              hoveredIdx={hoveredIdxLeft}
+              setHoveredIdx={setHoveredIdxLeft}
+              colorScheme="primary"
+            />
+          </div>
+        </div>
+
+        {/* การ์ดฝั่งขวา: การวิเคราะห์เชิงเปรียบเทียบปริมาณ */}
+        <div 
+          style={{ 
+            background: "var(--surface)", 
+            border: "1px solid var(--border)", 
+            borderRadius: 16, 
+            padding: 24, 
+            boxShadow: "var(--shadow)",
+            display: "flex",
+            flexDirection: "column"
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ width: 28, height: 28, background: "var(--accent-soft)", borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Icon n="bar-chart" s={{ fontSize: 13, color: "var(--accent)" }} />
+              </div>
+              <h4 style={{ fontSize: 14, fontWeight: 700, color: "var(--text)", margin: 0 }}>เปรียบเทียบปริมาณความถี่สะสม</h4>
+            </div>
+
+            {/* ปุ่มเลือกประเภทกราฟ (Chart Type Selector Pills) */}
+            <div style={{ display: "flex", background: "var(--surface-2)", borderRadius: 8, padding: 3, border: "1px solid var(--border)" }}>
+              {([
+                { id: "bar", icon: "bar-chart" },
+                { id: "donut", icon: "pie-chart" },
+                { id: "line", icon: "trending-up" }
+              ] as const).map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => setChartTypeRight(t.id)}
+                  style={{
+                    border: "none",
+                    background: chartTypeRight === t.id ? "var(--accent)" : "transparent",
+                    color: chartTypeRight === t.id ? "#FFF" : "var(--text-mute)",
+                    padding: "5px 10px",
+                    borderRadius: 6,
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    transition: "all 0.15s"
+                  }}
+                  title={t.id === "bar" ? "กราฟแท่ง" : t.id === "donut" ? "กราฟโดนัท" : "กราฟเส้น"}
+                >
+                  <Icon n={t.icon} s={{ fontSize: 13, color: chartTypeRight === t.id ? "#FFF" : "inherit" }} />
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ flexGrow: 1, minHeight: 220, position: "relative" }}>
+            <RenderSVGChart
+              type={chartTypeRight}
+              data={chartDataRight}
+              hoveredIdx={hoveredIdxRight}
+              setHoveredIdx={setHoveredIdxRight}
+              colorScheme="secondary"
+            />
+          </div>
+        </div>
       </div>
 
       {/* ── ตารางแสดงผลรายงานเชิงลึก (Live Reports Data Grid Panel) ── */}
