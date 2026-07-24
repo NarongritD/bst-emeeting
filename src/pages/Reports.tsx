@@ -73,7 +73,8 @@ const RenderSVGChart: React.FC<{
   hoveredIdx: number | null;
   setHoveredIdx: (idx: number | null) => void;
   colorScheme?: "primary" | "secondary";
-}> = ({ type, data, hoveredIdx, setHoveredIdx, colorScheme = "primary" }) => {
+  chartId?: string;
+}> = ({ type, data, hoveredIdx, setHoveredIdx, colorScheme = "primary", chartId }) => {
   if (!data || data.length === 0) {
     return (
       <div style={{ height: 200, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "var(--text-ghost)" }}>
@@ -102,7 +103,7 @@ const RenderSVGChart: React.FC<{
     const gap = (chartW - barW * cleanData.length) / (cleanData.length + 1);
 
     return (
-      <svg width="100%" height="100%" viewBox={`0 0 ${width} ${height}`} style={{ overflow: "visible" }}>
+      <svg id={chartId} width="100%" height="100%" viewBox={`0 0 ${width} ${height}`} style={{ overflow: "visible" }}>
         <defs>
           <linearGradient id="barGradPrimary" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#3B82F6" />
@@ -239,7 +240,7 @@ const RenderSVGChart: React.FC<{
     return (
       <div style={{ display: "flex", alignItems: "center", width: "100%", height: "100%", gap: 10 }}>
         <div style={{ position: "relative", width: 250, height: 220, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-          <svg width="230" height="220" viewBox="0 0 270 240" style={{ overflow: "visible" }}>
+          <svg id={chartId} width="230" height="220" viewBox="0 0 270 240" style={{ overflow: "visible" }}>
             {/* วงกลมพื้นหลังสีเทาอ่อนสำหรับบอกขอบเขต (Background circle track) */}
             <circle
               cx={cx}
@@ -345,7 +346,7 @@ const RenderSVGChart: React.FC<{
       : "";
 
     return (
-      <svg width="100%" height="100%" viewBox={`0 0 ${width} ${height}`} style={{ overflow: "visible" }}>
+      <svg id={chartId} width="100%" height="100%" viewBox={`0 0 ${width} ${height}`} style={{ overflow: "visible" }}>
         <defs>
           <linearGradient id="areaGradPrimary" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#3B82F6" stopOpacity={0.3} />
@@ -611,6 +612,65 @@ export const Reports: React.FC = () => {
     setDeptFilter("all");
     setRoomFilter("all");
     showToast("ล้างเงื่อนไขการค้นหาเรียบร้อยแล้ว", "info");
+  };
+
+  const downloadChartAsPNG = (svgId: string, filename: string) => {
+    const svgElement = document.getElementById(svgId);
+    if (!svgElement) {
+      showToast("ไม่พบข้อมูลสถิติแผนภูมิสำหรับส่งออก", "error");
+      return;
+    }
+
+    try {
+      const serializer = new XMLSerializer();
+      let svgString = serializer.serializeToString(svgElement);
+
+      svgString = svgString
+        .replace(/var\(--text\)/g, "#1E293B")
+        .replace(/var\(--text-sub\)/g, "#475569")
+        .replace(/var\(--text-mute\)/g, "#94A3B8")
+        .replace(/var\(--border-soft\)/g, "#F1F5F9")
+        .replace(/var\(--surface\)/g, "#FFFFFF");
+
+      const svgBlob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
+      const URL = window.URL || window.webkitURL || window;
+      const blobURL = URL.createObjectURL(svgBlob);
+
+      const image = new Image();
+      image.onload = () => {
+        const canvas = document.createElement("canvas");
+        const bbox = svgElement.getBoundingClientRect();
+        canvas.width = (bbox.width || 500) * 2;
+        canvas.height = (bbox.height || 240) * 2;
+
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.fillStyle = "#FFFFFF";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+          const pngURL = canvas.toDataURL("image/png");
+          const downloadLink = document.createElement("a");
+          downloadLink.href = pngURL;
+          downloadLink.download = `${filename}.png`;
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeChild(downloadLink);
+          showToast(`ดาวน์โหลดแผนภูมิ "${filename}.png" สำเร็จ`, "success");
+        } else {
+          showToast("ไม่สามารถสร้างอ็อบเจกต์รูปภาพได้", "error");
+        }
+        URL.revokeObjectURL(blobURL);
+      };
+      image.onerror = () => {
+        showToast("เกิดข้อผิดพลาดในการโหลดองค์ประกอบกราฟิก", "error");
+        URL.revokeObjectURL(blobURL);
+      };
+      image.src = blobURL;
+    } catch (err) {
+      console.error("Export chart error:", err);
+      showToast("ระบบส่งออกกราฟิกขัดข้องชั่วคราว", "error");
+    }
   };
 
   const getCSVData = () => {
@@ -1537,6 +1597,65 @@ export const Reports: React.FC = () => {
           </div>
         </div>
 
+        {/* แผงปุ่มลัดเลือกช่วงเวลาด่วน (Quick Date Presets Row) */}
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20, alignItems: "center" }}>
+          <span style={{ fontSize: 12.5, fontWeight: 600, color: "var(--text-mute)", marginRight: 4 }}>ช่วงเวลาด่วน:</span>
+          {[
+            { label: "เดือนนี้", type: "this-month" },
+            { label: "ไตรมาสนี้", type: "this-quarter" },
+            { label: "ปีนี้", type: "this-year" },
+            { label: "ดูทั้งหมด (2026)", type: "all-time" }
+          ].map((preset) => (
+            <button
+              key={preset.type}
+              onClick={() => {
+                const today = new Date();
+                const year = today.getFullYear();
+                if (preset.type === "this-month") {
+                  const month = String(today.getMonth() + 1).padStart(2, '0');
+                  setStart(`${year}-${month}-01`);
+                  const lastDay = new Date(year, today.getMonth() + 1, 0).getDate();
+                  setEnd(`${year}-${month}-${String(lastDay).padStart(2, '0')}`);
+                } else if (preset.type === "this-quarter") {
+                  const quarter = Math.floor(today.getMonth() / 3);
+                  const startMonth = String(quarter * 3 + 1).padStart(2, '0');
+                  setStart(`${year}-${startMonth}-01`);
+                  const endMonth = quarter * 3 + 3;
+                  const lastDay = new Date(year, endMonth, 0).getDate();
+                  setEnd(`${year}-${String(endMonth).padStart(2, '0')}-${String(lastDay).padStart(2, '0')}`);
+                } else if (preset.type === "this-year") {
+                  setStart(`${year}-01-01`);
+                  setEnd(`${year}-12-31`);
+                } else if (preset.type === "all-time") {
+                  setStart("2026-01-01");
+                  setEnd("2026-12-31");
+                }
+              }}
+              style={{
+                background: "var(--surface-2)",
+                border: "1px solid var(--border)",
+                borderRadius: 20,
+                padding: "4px 12px",
+                fontSize: 12,
+                fontWeight: 600,
+                color: "var(--text-sub)",
+                cursor: "pointer",
+                transition: "all 0.12s"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "var(--accent)";
+                e.currentTarget.style.color = "var(--accent)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "var(--border)";
+                e.currentTarget.style.color = "var(--text-sub)";
+              }}
+            >
+              {preset.label}
+            </button>
+          ))}
+        </div>
+
         {/* แผงปุ่มค้นหาและดาวน์โหลดรายงาน (Search & Export Buttons Bar) */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap", borderTop: "1px solid var(--border-soft)", paddingTop: 20 }}>
           {/* ฝั่งซ้าย: ปุ่มล้างเงื่อนไขการค้นหา */}
@@ -1677,33 +1796,68 @@ export const Reports: React.FC = () => {
               <h4 style={{ fontSize: 14, fontWeight: 700, color: "var(--text)", margin: 0 }}>วิเคราะห์สัดส่วนอัตราส่วน (%)</h4>
             </div>
             
-            {/* ปุ่มเลือกประเภทกราฟ (Chart Type Selector Pills) */}
-            <div style={{ display: "flex", background: "var(--surface-2)", borderRadius: 8, padding: 3, border: "1px solid var(--border)" }}>
-              {([
-                { id: "bar", icon: "bar-chart" },
-                { id: "donut", icon: "pie-chart" },
-                { id: "line", icon: "trending-up" }
-              ] as const).map((t) => (
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              {/* ปุ่มดาวน์โหลดกราฟ (Export PNG Button) */}
+              {chartDataLeft && chartDataLeft.length > 0 && (
                 <button
-                  key={t.id}
-                  onClick={() => setChartTypeLeft(t.id)}
+                  onClick={() => downloadChartAsPNG("left-chart-svg", `Chart_Ratios_Report_${selectedReportId}`)}
                   style={{
-                    border: "none",
-                    background: chartTypeLeft === t.id ? "var(--accent)" : "transparent",
-                    color: chartTypeLeft === t.id ? "#FFF" : "var(--text-mute)",
-                    padding: "5px 10px",
-                    borderRadius: 6,
+                    border: "1px solid var(--border)",
+                    background: "var(--surface)",
+                    color: "var(--text-sub)",
+                    width: 32,
+                    height: 32,
+                    borderRadius: 8,
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     transition: "all 0.15s"
                   }}
-                  title={t.id === "bar" ? "กราฟแท่ง" : t.id === "donut" ? "กราฟโดนัท" : "กราฟเส้น"}
+                  title="ดาวน์โหลดรูปภาพแผนภูมิฝั่งซ้าย (PNG)"
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = "var(--accent)";
+                    e.currentTarget.style.color = "var(--accent)";
+                    e.currentTarget.style.background = "var(--accent-soft)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = "var(--border)";
+                    e.currentTarget.style.color = "var(--text-sub)";
+                    e.currentTarget.style.background = "var(--surface)";
+                  }}
                 >
-                  <Icon n={t.icon} s={{ fontSize: 13, color: chartTypeLeft === t.id ? "#FFF" : "inherit" }} />
+                  <Icon n="download" s={{ fontSize: 13.5 }} />
                 </button>
-              ))}
+              )}
+
+              {/* ปุ่มเลือกประเภทกราฟ (Chart Type Selector Pills) */}
+              <div style={{ display: "flex", background: "var(--surface-2)", borderRadius: 8, padding: 3, border: "1px solid var(--border)" }}>
+                {([
+                  { id: "bar", icon: "bar-chart" },
+                  { id: "donut", icon: "pie-chart" },
+                  { id: "line", icon: "trending-up" }
+                ] as const).map((t) => (
+                  <button
+                    key={t.id}
+                    onClick={() => setChartTypeLeft(t.id)}
+                    style={{
+                      border: "none",
+                      background: chartTypeLeft === t.id ? "var(--accent)" : "transparent",
+                      color: chartTypeLeft === t.id ? "#FFF" : "var(--text-mute)",
+                      padding: "5px 10px",
+                      borderRadius: 6,
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      transition: "all 0.15s"
+                    }}
+                    title={t.id === "bar" ? "กราฟแท่ง" : t.id === "donut" ? "กราฟโดนัท" : "กราฟเส้น"}
+                  >
+                    <Icon n={t.icon} s={{ fontSize: 13, color: chartTypeLeft === t.id ? "#FFF" : "inherit" }} />
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -1714,6 +1868,7 @@ export const Reports: React.FC = () => {
               hoveredIdx={hoveredIdxLeft}
               setHoveredIdx={setHoveredIdxLeft}
               colorScheme="primary"
+              chartId="left-chart-svg"
             />
           </div>
         </div>
@@ -1738,33 +1893,68 @@ export const Reports: React.FC = () => {
               <h4 style={{ fontSize: 14, fontWeight: 700, color: "var(--text)", margin: 0 }}>เปรียบเทียบปริมาณความถี่สะสม</h4>
             </div>
 
-            {/* ปุ่มเลือกประเภทกราฟ (Chart Type Selector Pills) */}
-            <div style={{ display: "flex", background: "var(--surface-2)", borderRadius: 8, padding: 3, border: "1px solid var(--border)" }}>
-              {([
-                { id: "bar", icon: "bar-chart" },
-                { id: "donut", icon: "pie-chart" },
-                { id: "line", icon: "trending-up" }
-              ] as const).map((t) => (
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              {/* ปุ่มดาวน์โหลดกราฟ (Export PNG Button) */}
+              {chartDataRight && chartDataRight.length > 0 && (
                 <button
-                  key={t.id}
-                  onClick={() => setChartTypeRight(t.id)}
+                  onClick={() => downloadChartAsPNG("right-chart-svg", `Chart_Volumes_Report_${selectedReportId}`)}
                   style={{
-                    border: "none",
-                    background: chartTypeRight === t.id ? "var(--accent)" : "transparent",
-                    color: chartTypeRight === t.id ? "#FFF" : "var(--text-mute)",
-                    padding: "5px 10px",
-                    borderRadius: 6,
+                    border: "1px solid var(--border)",
+                    background: "var(--surface)",
+                    color: "var(--text-sub)",
+                    width: 32,
+                    height: 32,
+                    borderRadius: 8,
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     transition: "all 0.15s"
                   }}
-                  title={t.id === "bar" ? "กราฟแท่ง" : t.id === "donut" ? "กราฟโดนัท" : "กราฟเส้น"}
+                  title="ดาวน์โหลดรูปภาพแผนภูมิฝั่งขวา (PNG)"
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = "var(--accent)";
+                    e.currentTarget.style.color = "var(--accent)";
+                    e.currentTarget.style.background = "var(--accent-soft)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = "var(--border)";
+                    e.currentTarget.style.color = "var(--text-sub)";
+                    e.currentTarget.style.background = "var(--surface)";
+                  }}
                 >
-                  <Icon n={t.icon} s={{ fontSize: 13, color: chartTypeRight === t.id ? "#FFF" : "inherit" }} />
+                  <Icon n="download" s={{ fontSize: 13.5 }} />
                 </button>
-              ))}
+              )}
+
+              {/* ปุ่มเลือกประเภทกราฟ (Chart Type Selector Pills) */}
+              <div style={{ display: "flex", background: "var(--surface-2)", borderRadius: 8, padding: 3, border: "1px solid var(--border)" }}>
+                {([
+                  { id: "bar", icon: "bar-chart" },
+                  { id: "donut", icon: "pie-chart" },
+                  { id: "line", icon: "trending-up" }
+                ] as const).map((t) => (
+                  <button
+                    key={t.id}
+                    onClick={() => setChartTypeRight(t.id)}
+                    style={{
+                      border: "none",
+                      background: chartTypeRight === t.id ? "var(--accent)" : "transparent",
+                      color: chartTypeRight === t.id ? "#FFF" : "var(--text-mute)",
+                      padding: "5px 10px",
+                      borderRadius: 6,
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      transition: "all 0.15s"
+                    }}
+                    title={t.id === "bar" ? "กราฟแท่ง" : t.id === "donut" ? "กราฟโดนัท" : "กราฟเส้น"}
+                  >
+                    <Icon n={t.icon} s={{ fontSize: 13, color: chartTypeRight === t.id ? "#FFF" : "inherit" }} />
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -1775,6 +1965,7 @@ export const Reports: React.FC = () => {
               hoveredIdx={hoveredIdxRight}
               setHoveredIdx={setHoveredIdxRight}
               colorScheme="secondary"
+              chartId="right-chart-svg"
             />
           </div>
         </div>
