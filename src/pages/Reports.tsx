@@ -85,7 +85,8 @@ const RenderSVGChart: React.FC<{
 
   const cleanData = data.map(d => ({ label: d.label, value: Math.max(0, d.value) }));
   const maxVal = Math.max(...cleanData.map(d => d.value), 1);
-  const total = cleanData.reduce((acc, curr) => acc + curr.value, 0) || 1;
+  const realTotal = cleanData.reduce((acc, curr) => acc + curr.value, 0);
+  const total = realTotal || 1; // สำหรับใช้เป็นตัวหารคำนวณสัดส่วนเท่านั้น
 
   const width = 500;
   const height = 240;
@@ -132,7 +133,10 @@ const RenderSVGChart: React.FC<{
                 textAnchor="end"
                 style={{ fontSize: 10, fill: "var(--text-mute)" }}
               >
-                {Math.round(maxVal * ratio)}
+                {(() => {
+                  const val = maxVal * ratio;
+                  return Number.isInteger(val) ? val.toString() : val.toFixed(1);
+                })()}
               </text>
             </g>
           );
@@ -236,6 +240,16 @@ const RenderSVGChart: React.FC<{
       <div style={{ display: "flex", alignItems: "center", width: "100%", height: "100%", gap: 10 }}>
         <div style={{ position: "relative", width: 250, height: 220, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
           <svg width="230" height="220" viewBox="0 0 270 240" style={{ overflow: "visible" }}>
+            {/* วงกลมพื้นหลังสีเทาอ่อนสำหรับบอกขอบเขต (Background circle track) */}
+            <circle
+              cx={cx}
+              cy={cy}
+              r={r}
+              fill="transparent"
+              stroke="var(--border-soft)"
+              strokeWidth={20}
+            />
+
             {cleanData.map((d, i) => {
               const percent = d.value / total;
               const strokeLength = percent * circ;
@@ -272,7 +286,7 @@ const RenderSVGChart: React.FC<{
               รวมทั้งหมด
             </text>
             <text x={cx} y={cy + 16} textAnchor="middle" style={{ fill: "var(--text)", fontSize: 19, fontWeight: 800 }}>
-              {total}
+              {realTotal}
             </text>
           </svg>
         </div>
@@ -362,7 +376,10 @@ const RenderSVGChart: React.FC<{
                 textAnchor="end"
                 style={{ fontSize: 10, fill: "var(--text-mute)" }}
               >
-                {Math.round(maxVal * ratio)}
+                {(() => {
+                  const val = maxVal * ratio;
+                  return Number.isInteger(val) ? val.toString() : val.toFixed(1);
+                })()}
               </text>
             </g>
           );
