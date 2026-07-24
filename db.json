@@ -927,7 +927,7 @@
       "isFirstLogin": false,
       "password": "12345",
       "status": "active",
-      "lastLogin": "2026-07-15T07:29:40.059Z"
+      "lastLogin": "2026-07-20T08:47:37.683Z"
     },
     {
       "id": 67,
@@ -996,11 +996,329 @@
     }
   ],
   "nextRoomId": 4,
-  "bookings": [],
-  "nextBookingId": 1,
-  "agendas": [],
-  "nextAgendaId": 1,
-  "minutes": [],
-  "notifications": [],
-  "dbVersion": 2
+  "bookings": [
+    {
+      "id": 1,
+      "roomId": 1,
+      "organizerId": 1,
+      "title": "ประชุมผู้ถือหุ้นประจำไตรมาส 2/2026",
+      "date": "2026-07-10",
+      "start": "09:00",
+      "end": "11:00",
+      "status": "approved"
+    },
+    {
+      "id": 2,
+      "roomId": 2,
+      "organizerId": 6,
+      "title": "ประชุมเตรียมสเปกโครงการภาครัฐ (CMG Zoom Meeting)",
+      "date": "2026-07-15",
+      "start": "10:00",
+      "end": "12:00",
+      "status": "approved"
+    },
+    {
+      "id": 3,
+      "roomId": 3,
+      "organizerId": 11,
+      "title": "ประชุมวางแผนปรับปรุงระบบคลังสินค้าและการกระจายสินค้า",
+      "date": "2026-07-18",
+      "start": "14:00",
+      "end": "16:00",
+      "status": "approved"
+    },
+    {
+      "id": 4,
+      "roomId": 1,
+      "organizerId": 42,
+      "title": "Sprint Planning: BST e-Meeting Web App",
+      "date": "2026-07-22",
+      "start": "13:00",
+      "end": "15:00",
+      "status": "approved"
+    },
+    {
+      "id": 5,
+      "roomId": 2,
+      "organizerId": 31,
+      "title": "ประชุมทีมขายประจำสัปดาห์ (Weekly Sales Catch-up)",
+      "date": "2026-07-24",
+      "start": "08:00",
+      "end": "09:00",
+      "status": "approved"
+    }
+  ],
+  "nextBookingId": 6,
+  "agendas": [
+    {
+      "id": 1,
+      "code": "MEET-001",
+      "roomId": 1,
+      "organizerId": 1,
+      "title": "ประชุมผู้ถือหุ้นประจำไตรมาส 2/2026",
+      "date": "2026-07-10",
+      "start": "09:00",
+      "end": "11:00",
+      "locationMode": "place",
+      "participantIds": [
+        2,
+        3,
+        4,
+        5,
+        29
+      ],
+      "items": [
+        {
+          "id": 1,
+          "title": "วาระที่ 1: รายงานผลการดำเนินงานไตรมาส 1/2026"
+        },
+        {
+          "id": 2,
+          "title": "วาระที่ 2: พิจารณารับรองงบการเงิน"
+        },
+        {
+          "id": 3,
+          "title": "วาระที่ 3: พิจารณาแผนการตลาดไตรมาสถัดไป"
+        },
+        {
+          "id": 4,
+          "title": "วาระที่ 4: เรื่องอื่นๆ (ถ้ามี)"
+        }
+      ],
+      "attachments": [
+        {
+          "id": 1,
+          "name": "slides.pdf"
+        },
+        {
+          "id": 2,
+          "name": "report.pdf"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "id": 2,
+      "code": "MEET-002",
+      "roomId": 2,
+      "organizerId": 6,
+      "title": "ประชุมเตรียมสเปกโครงการภาครัฐ (CMG Zoom Meeting)",
+      "date": "2026-07-15",
+      "start": "10:00",
+      "end": "12:00",
+      "locationMode": "hybrid",
+      "participantIds": [
+        7,
+        8,
+        38,
+        39,
+        66
+      ],
+      "items": [
+        {
+          "id": 1,
+          "title": "วาระที่ 1: ตรวจสอบข้อกำหนด TOR ภาครัฐ"
+        },
+        {
+          "id": 2,
+          "title": "วาระที่ 2: มอบหมายงานเขียนข้อเสนอทางเทคนิค"
+        }
+      ],
+      "attachments": [],
+      "status": "completed"
+    },
+    {
+      "id": 3,
+      "code": "MEET-003",
+      "roomId": 3,
+      "organizerId": 11,
+      "title": "ประชุมวางแผนปรับปรุงระบบคลังสินค้าและการกระจายสินค้า",
+      "date": "2026-07-18",
+      "start": "14:00",
+      "end": "16:00",
+      "locationMode": "place",
+      "participantIds": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "items": [
+        {
+          "id": 1,
+          "title": "วาระที่ 1: สรุปปัญหาพื้นที่จัดเก็บคลังสินค้า BST (JAS)"
+        },
+        {
+          "id": 2,
+          "title": "วาระที่ 2: ข้อเสนอการขยายโกดังเฟสใหม่"
+        },
+        {
+          "id": 3,
+          "title": "วาระที่ 3: แผนบริหารทรัพยากรจัดส่ง"
+        }
+      ],
+      "attachments": [
+        {
+          "id": 1,
+          "name": "inventory_layout.dwg"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "id": 4,
+      "code": "MEET-004",
+      "roomId": 1,
+      "organizerId": 42,
+      "title": "Sprint Planning: BST e-Meeting Web App",
+      "date": "2026-07-22",
+      "start": "13:00",
+      "end": "15:00",
+      "locationMode": "online",
+      "participantIds": [
+        43,
+        44,
+        45
+      ],
+      "items": [
+        {
+          "id": 1,
+          "title": "วาระที่ 1: ตรวจรับงาน Sprint 4"
+        },
+        {
+          "id": 2,
+          "title": "วาระที่ 2: วางแผนการพัฒนาฟีเจอร์รายงานเชิงสถิติ"
+        },
+        {
+          "id": 3,
+          "title": "วาระที่ 3: ตรวจสอบความถูกต้องของแผนภูมิ SVG"
+        },
+        {
+          "id": 4,
+          "title": "วาระที่ 4: ซ้อม Deploy ขึ้น Render"
+        },
+        {
+          "id": 5,
+          "title": "วาระที่ 5: ประเมินความเสี่ยงและภาระงาน"
+        }
+      ],
+      "attachments": [
+        {
+          "id": 1,
+          "name": "backlog.xlsx"
+        }
+      ],
+      "status": "completed"
+    }
+  ],
+  "nextAgendaId": 5,
+  "minutes": [
+    {
+      "id": 1,
+      "agendaId": 1,
+      "recorderId": 4,
+      "status": "published",
+      "actualStart": "09:00",
+      "actualEnd": "11:30",
+      "actionItems": [
+        {
+          "id": 1,
+          "task": "ส่งสรุปงบการเงินปี 2025",
+          "ownerId": 21,
+          "dueDate": "2026-07-15",
+          "done": true
+        },
+        {
+          "id": 2,
+          "task": "ปรับโครงสร้างระบบจัดซื้อจัดจ้างใหม่",
+          "ownerId": 27,
+          "dueDate": "2026-07-20",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "agendaId": 2,
+      "recorderId": 6,
+      "status": "published",
+      "actualStart": "10:00",
+      "actualEnd": "12:00",
+      "actionItems": [
+        {
+          "id": 3,
+          "task": "จัดเตรียมเอกสาร Proposal ส่งกรมสรรพสามิต",
+          "ownerId": 66,
+          "dueDate": "2026-07-18",
+          "done": true
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "agendaId": 3,
+      "recorderId": 13,
+      "status": "published",
+      "actualStart": "14:00",
+      "actualEnd": "16:15",
+      "actionItems": [
+        {
+          "id": 4,
+          "task": "ตรวจนับยอดคงค้างวัตถุดิบคลัง JAS",
+          "ownerId": 12,
+          "dueDate": "2026-07-22",
+          "done": false
+        },
+        {
+          "id": 5,
+          "task": "สรุปรายงานค่าซ่อมบำรุงรถขนส่งสะสม",
+          "ownerId": 13,
+          "dueDate": "2026-07-23",
+          "done": true
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "agendaId": 4,
+      "recorderId": 44,
+      "status": "published",
+      "actualStart": "13:00",
+      "actualEnd": "14:50",
+      "actionItems": [
+        {
+          "id": 6,
+          "task": "ออกแบบ SVG Interactive Chart หน้ารายงาน",
+          "ownerId": 43,
+          "dueDate": "2026-07-24",
+          "done": true
+        },
+        {
+          "id": 7,
+          "task": "ทดสอบระบบ Deployment บนคลาวด์ Render",
+          "ownerId": 44,
+          "dueDate": "2026-07-26",
+          "done": false
+        }
+      ]
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "userId": 21,
+      "message": "คุณได้รับมอบหมายงาน: ส่งสรุปงบการเงินปี 2025",
+      "read": true,
+      "createdAt": "2026-07-10T11:30:00.000Z"
+    },
+    {
+      "id": 2,
+      "userId": 27,
+      "message": "คุณได้รับมอบหมายงาน: ปรับโครงสร้างระบบจัดซื้อจัดจ้างใหม่",
+      "read": false,
+      "createdAt": "2026-07-10T11:30:00.000Z"
+    }
+  ],
+  "dbVersion": 2,
+  "nextMinuteId": 5
 }
