@@ -1001,98 +1001,170 @@
       "id": 1,
       "roomId": 1,
       "organizerId": 1,
-      "title": "ประชุมผู้ถือหุ้นประจำไตรมาส 2/2026",
+      "title": "ประชุมประจำแผนก Management Team ครั้งที่ 1",
       "date": "2026-07-10",
-      "start": "09:00",
-      "end": "11:00",
+      "start": "08:00",
+      "end": "09:30",
       "status": "approved"
     },
     {
       "id": 2,
       "roomId": 2,
       "organizerId": 6,
-      "title": "ประชุมเตรียมสเปกโครงการภาครัฐ (CMG Zoom Meeting)",
-      "date": "2026-07-15",
+      "title": "ประชุมประจำแผนก Presales Engineer ครั้งที่ 2",
+      "date": "2026-07-11",
       "start": "10:00",
-      "end": "12:00",
+      "end": "11:30",
       "status": "approved"
     },
     {
       "id": 3,
       "roomId": 3,
-      "organizerId": 11,
-      "title": "ประชุมวางแผนปรับปรุงระบบคลังสินค้าและการกระจายสินค้า",
-      "date": "2026-07-18",
-      "start": "14:00",
-      "end": "16:00",
+      "organizerId": 8,
+      "title": "ประชุมประจำแผนก Senior System Engineer  / Senior Network Engineer ครั้งที่ 3",
+      "date": "2026-07-12",
+      "start": "12:00",
+      "end": "13:30",
       "status": "approved"
     },
     {
       "id": 4,
       "roomId": 1,
-      "organizerId": 42,
-      "title": "Sprint Planning: BST e-Meeting Web App",
-      "date": "2026-07-22",
-      "start": "13:00",
-      "end": "15:00",
+      "organizerId": 11,
+      "title": "ประชุมประจำแผนก Stock / Logistic / Service Team ครั้งที่ 1",
+      "date": "2026-07-13",
+      "start": "14:00",
+      "end": "15:30",
       "status": "approved"
     },
     {
       "id": 5,
       "roomId": 2,
-      "organizerId": 31,
-      "title": "ประชุมทีมขายประจำสัปดาห์ (Weekly Sales Catch-up)",
-      "date": "2026-07-24",
+      "organizerId": 21,
+      "title": "ประชุมประจำแผนก Accounting / Messenger ครั้งที่ 2",
+      "date": "2026-07-14",
+      "start": "16:00",
+      "end": "17:30",
+      "status": "approved"
+    },
+    {
+      "id": 6,
+      "roomId": 3,
+      "organizerId": 25,
+      "title": "ประชุมประจำแผนก Human Resource ครั้งที่ 3",
+      "date": "2026-07-15",
+      "start": "18:00",
+      "end": "19:30",
+      "status": "approved"
+    },
+    {
+      "id": 7,
+      "roomId": 1,
+      "organizerId": 27,
+      "title": "ประชุมประจำแผนก Purchasing ครั้งที่ 1",
+      "date": "2026-07-16",
       "start": "08:00",
-      "end": "09:00",
+      "end": "09:30",
+      "status": "approved"
+    },
+    {
+      "id": 8,
+      "roomId": 2,
+      "organizerId": 29,
+      "title": "ประชุมประจำแผนก Sales Director / Sales Manager ครั้งที่ 2",
+      "date": "2026-07-17",
+      "start": "10:00",
+      "end": "11:30",
+      "status": "approved"
+    },
+    {
+      "id": 9,
+      "roomId": 3,
+      "organizerId": 31,
+      "title": "ประชุมประจำแผนก Sales Team ครั้งที่ 3",
+      "date": "2026-07-18",
+      "start": "12:00",
+      "end": "13:30",
+      "status": "approved"
+    },
+    {
+      "id": 10,
+      "roomId": 1,
+      "organizerId": 38,
+      "title": "ประชุมประจำแผนก CMG Team ครั้งที่ 1",
+      "date": "2026-07-19",
+      "start": "14:00",
+      "end": "15:30",
+      "status": "approved"
+    },
+    {
+      "id": 11,
+      "roomId": 2,
+      "organizerId": 42,
+      "title": "ประชุมประจำแผนก Software & Developer ครั้งที่ 2",
+      "date": "2026-07-20",
+      "start": "16:00",
+      "end": "17:30",
+      "status": "approved"
+    },
+    {
+      "id": 12,
+      "roomId": 3,
+      "organizerId": 46,
+      "title": "ประชุมประจำแผนก Government Team ครั้งที่ 3",
+      "date": "2026-07-21",
+      "start": "18:00",
+      "end": "19:30",
+      "status": "approved"
+    },
+    {
+      "id": 13,
+      "roomId": 1,
+      "organizerId": 1,
+      "title": "ประชุมยกเลิกกระทันหัน (Ghost Meeting Test)",
+      "date": "2026-07-24",
+      "start": "17:00",
+      "end": "18:00",
       "status": "approved"
     }
   ],
-  "nextBookingId": 6,
+  "nextBookingId": 14,
   "agendas": [
     {
       "id": 1,
       "code": "MEET-001",
       "roomId": 1,
       "organizerId": 1,
-      "title": "ประชุมผู้ถือหุ้นประจำไตรมาส 2/2026",
+      "title": "ประชุมประจำแผนก Management Team ครั้งที่ 1",
       "date": "2026-07-10",
-      "start": "09:00",
-      "end": "11:00",
+      "start": "08:00",
+      "end": "09:30",
       "locationMode": "place",
       "participantIds": [
+        1,
         2,
         3,
         4,
-        5,
-        29
+        5
       ],
       "items": [
         {
           "id": 1,
-          "title": "วาระที่ 1: รายงานผลการดำเนินงานไตรมาส 1/2026"
+          "title": "วาระที่ 1: ติดตามงานค้างส่งของฝ่าย Management Team"
         },
         {
           "id": 2,
-          "title": "วาระที่ 2: พิจารณารับรองงบการเงิน"
+          "title": "วาระที่ 2: วางเป้าหมายการดำเนินงานรายไตรมาส"
         },
         {
           "id": 3,
-          "title": "วาระที่ 3: พิจารณาแผนการตลาดไตรมาสถัดไป"
-        },
-        {
-          "id": 4,
-          "title": "วาระที่ 4: เรื่องอื่นๆ (ถ้ามี)"
+          "title": "วาระที่ 3: ปัญหาและข้อเสนอแนะในการทำงาน"
         }
       ],
       "attachments": [
         {
           "id": 1,
-          "name": "slides.pdf"
-        },
-        {
-          "id": 2,
-          "name": "report.pdf"
+          "name": "agenda_presentation.pdf"
         }
       ],
       "status": "completed"
@@ -1102,26 +1174,27 @@
       "code": "MEET-002",
       "roomId": 2,
       "organizerId": 6,
-      "title": "ประชุมเตรียมสเปกโครงการภาครัฐ (CMG Zoom Meeting)",
-      "date": "2026-07-15",
+      "title": "ประชุมประจำแผนก Presales Engineer ครั้งที่ 2",
+      "date": "2026-07-11",
       "start": "10:00",
-      "end": "12:00",
-      "locationMode": "hybrid",
+      "end": "11:30",
+      "locationMode": "online",
       "participantIds": [
-        7,
-        8,
-        38,
-        39,
-        66
+        6,
+        7
       ],
       "items": [
         {
           "id": 1,
-          "title": "วาระที่ 1: ตรวจสอบข้อกำหนด TOR ภาครัฐ"
+          "title": "วาระที่ 1: ติดตามงานค้างส่งของฝ่าย Presales Engineer"
         },
         {
           "id": 2,
-          "title": "วาระที่ 2: มอบหมายงานเขียนข้อเสนอทางเทคนิค"
+          "title": "วาระที่ 2: วางเป้าหมายการดำเนินงานรายไตรมาส"
+        },
+        {
+          "id": 3,
+          "title": "วาระที่ 3: ปัญหาและข้อเสนอแนะในการทำงาน"
         }
       ],
       "attachments": [],
@@ -1131,36 +1204,35 @@
       "id": 3,
       "code": "MEET-003",
       "roomId": 3,
-      "organizerId": 11,
-      "title": "ประชุมวางแผนปรับปรุงระบบคลังสินค้าและการกระจายสินค้า",
-      "date": "2026-07-18",
-      "start": "14:00",
-      "end": "16:00",
-      "locationMode": "place",
+      "organizerId": 8,
+      "title": "ประชุมประจำแผนก Senior System Engineer  / Senior Network Engineer ครั้งที่ 3",
+      "date": "2026-07-12",
+      "start": "12:00",
+      "end": "13:30",
+      "locationMode": "hybrid",
       "participantIds": [
-        12,
-        13,
-        14,
-        15
+        8,
+        9,
+        10
       ],
       "items": [
         {
           "id": 1,
-          "title": "วาระที่ 1: สรุปปัญหาพื้นที่จัดเก็บคลังสินค้า BST (JAS)"
+          "title": "วาระที่ 1: ติดตามงานค้างส่งของฝ่าย Senior System Engineer  / Senior Network Engineer"
         },
         {
           "id": 2,
-          "title": "วาระที่ 2: ข้อเสนอการขยายโกดังเฟสใหม่"
+          "title": "วาระที่ 2: วางเป้าหมายการดำเนินงานรายไตรมาส"
         },
         {
           "id": 3,
-          "title": "วาระที่ 3: แผนบริหารทรัพยากรจัดส่ง"
+          "title": "วาระที่ 3: ปัญหาและข้อเสนอแนะในการทำงาน"
         }
       ],
       "attachments": [
         {
           "id": 1,
-          "name": "inventory_layout.dwg"
+          "name": "agenda_presentation.pdf"
         }
       ],
       "status": "completed"
@@ -1169,13 +1241,256 @@
       "id": 4,
       "code": "MEET-004",
       "roomId": 1,
-      "organizerId": 42,
-      "title": "Sprint Planning: BST e-Meeting Web App",
-      "date": "2026-07-22",
-      "start": "13:00",
-      "end": "15:00",
+      "organizerId": 11,
+      "title": "ประชุมประจำแผนก Stock / Logistic / Service Team ครั้งที่ 1",
+      "date": "2026-07-13",
+      "start": "14:00",
+      "end": "15:30",
+      "locationMode": "place",
+      "participantIds": [
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "items": [
+        {
+          "id": 1,
+          "title": "วาระที่ 1: ติดตามงานค้างส่งของฝ่าย Stock / Logistic / Service Team"
+        },
+        {
+          "id": 2,
+          "title": "วาระที่ 2: วางเป้าหมายการดำเนินงานรายไตรมาส"
+        },
+        {
+          "id": 3,
+          "title": "วาระที่ 3: ปัญหาและข้อเสนอแนะในการทำงาน"
+        }
+      ],
+      "attachments": [],
+      "status": "completed"
+    },
+    {
+      "id": 5,
+      "code": "MEET-005",
+      "roomId": 2,
+      "organizerId": 21,
+      "title": "ประชุมประจำแผนก Accounting / Messenger ครั้งที่ 2",
+      "date": "2026-07-14",
+      "start": "16:00",
+      "end": "17:30",
       "locationMode": "online",
       "participantIds": [
+        21,
+        22,
+        23,
+        24
+      ],
+      "items": [
+        {
+          "id": 1,
+          "title": "วาระที่ 1: ติดตามงานค้างส่งของฝ่าย Accounting / Messenger"
+        },
+        {
+          "id": 2,
+          "title": "วาระที่ 2: วางเป้าหมายการดำเนินงานรายไตรมาส"
+        },
+        {
+          "id": 3,
+          "title": "วาระที่ 3: ปัญหาและข้อเสนอแนะในการทำงาน"
+        }
+      ],
+      "attachments": [
+        {
+          "id": 1,
+          "name": "agenda_presentation.pdf"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "id": 6,
+      "code": "MEET-006",
+      "roomId": 3,
+      "organizerId": 25,
+      "title": "ประชุมประจำแผนก Human Resource ครั้งที่ 3",
+      "date": "2026-07-15",
+      "start": "18:00",
+      "end": "19:30",
+      "locationMode": "hybrid",
+      "participantIds": [
+        25,
+        26
+      ],
+      "items": [
+        {
+          "id": 1,
+          "title": "วาระที่ 1: ติดตามงานค้างส่งของฝ่าย Human Resource"
+        },
+        {
+          "id": 2,
+          "title": "วาระที่ 2: วางเป้าหมายการดำเนินงานรายไตรมาส"
+        },
+        {
+          "id": 3,
+          "title": "วาระที่ 3: ปัญหาและข้อเสนอแนะในการทำงาน"
+        }
+      ],
+      "attachments": [],
+      "status": "completed"
+    },
+    {
+      "id": 7,
+      "code": "MEET-007",
+      "roomId": 1,
+      "organizerId": 27,
+      "title": "ประชุมประจำแผนก Purchasing ครั้งที่ 1",
+      "date": "2026-07-16",
+      "start": "08:00",
+      "end": "09:30",
+      "locationMode": "place",
+      "participantIds": [
+        27,
+        28
+      ],
+      "items": [
+        {
+          "id": 1,
+          "title": "วาระที่ 1: ติดตามงานค้างส่งของฝ่าย Purchasing"
+        },
+        {
+          "id": 2,
+          "title": "วาระที่ 2: วางเป้าหมายการดำเนินงานรายไตรมาส"
+        },
+        {
+          "id": 3,
+          "title": "วาระที่ 3: ปัญหาและข้อเสนอแนะในการทำงาน"
+        }
+      ],
+      "attachments": [
+        {
+          "id": 1,
+          "name": "agenda_presentation.pdf"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "id": 8,
+      "code": "MEET-008",
+      "roomId": 2,
+      "organizerId": 29,
+      "title": "ประชุมประจำแผนก Sales Director / Sales Manager ครั้งที่ 2",
+      "date": "2026-07-17",
+      "start": "10:00",
+      "end": "11:30",
+      "locationMode": "online",
+      "participantIds": [
+        29,
+        30
+      ],
+      "items": [
+        {
+          "id": 1,
+          "title": "วาระที่ 1: ติดตามงานค้างส่งของฝ่าย Sales Director / Sales Manager"
+        },
+        {
+          "id": 2,
+          "title": "วาระที่ 2: วางเป้าหมายการดำเนินงานรายไตรมาส"
+        },
+        {
+          "id": 3,
+          "title": "วาระที่ 3: ปัญหาและข้อเสนอแนะในการทำงาน"
+        }
+      ],
+      "attachments": [],
+      "status": "completed"
+    },
+    {
+      "id": 9,
+      "code": "MEET-009",
+      "roomId": 3,
+      "organizerId": 31,
+      "title": "ประชุมประจำแผนก Sales Team ครั้งที่ 3",
+      "date": "2026-07-18",
+      "start": "12:00",
+      "end": "13:30",
+      "locationMode": "hybrid",
+      "participantIds": [
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "items": [
+        {
+          "id": 1,
+          "title": "วาระที่ 1: ติดตามงานค้างส่งของฝ่าย Sales Team"
+        },
+        {
+          "id": 2,
+          "title": "วาระที่ 2: วางเป้าหมายการดำเนินงานรายไตรมาส"
+        },
+        {
+          "id": 3,
+          "title": "วาระที่ 3: ปัญหาและข้อเสนอแนะในการทำงาน"
+        }
+      ],
+      "attachments": [
+        {
+          "id": 1,
+          "name": "agenda_presentation.pdf"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "id": 10,
+      "code": "MEET-010",
+      "roomId": 1,
+      "organizerId": 38,
+      "title": "ประชุมประจำแผนก CMG Team ครั้งที่ 1",
+      "date": "2026-07-19",
+      "start": "14:00",
+      "end": "15:30",
+      "locationMode": "place",
+      "participantIds": [
+        38,
+        39,
+        40,
+        41
+      ],
+      "items": [
+        {
+          "id": 1,
+          "title": "วาระที่ 1: ติดตามงานค้างส่งของฝ่าย CMG Team"
+        },
+        {
+          "id": 2,
+          "title": "วาระที่ 2: วางเป้าหมายการดำเนินงานรายไตรมาส"
+        },
+        {
+          "id": 3,
+          "title": "วาระที่ 3: ปัญหาและข้อเสนอแนะในการทำงาน"
+        }
+      ],
+      "attachments": [],
+      "status": "completed"
+    },
+    {
+      "id": 11,
+      "code": "MEET-011",
+      "roomId": 2,
+      "organizerId": 42,
+      "title": "ประชุมประจำแผนก Software & Developer ครั้งที่ 2",
+      "date": "2026-07-20",
+      "start": "16:00",
+      "end": "17:30",
+      "locationMode": "online",
+      "participantIds": [
+        42,
         43,
         44,
         45
@@ -1183,56 +1498,82 @@
       "items": [
         {
           "id": 1,
-          "title": "วาระที่ 1: ตรวจรับงาน Sprint 4"
+          "title": "วาระที่ 1: ติดตามงานค้างส่งของฝ่าย Software & Developer"
         },
         {
           "id": 2,
-          "title": "วาระที่ 2: วางแผนการพัฒนาฟีเจอร์รายงานเชิงสถิติ"
+          "title": "วาระที่ 2: วางเป้าหมายการดำเนินงานรายไตรมาส"
         },
         {
           "id": 3,
-          "title": "วาระที่ 3: ตรวจสอบความถูกต้องของแผนภูมิ SVG"
-        },
-        {
-          "id": 4,
-          "title": "วาระที่ 4: ซ้อม Deploy ขึ้น Render"
-        },
-        {
-          "id": 5,
-          "title": "วาระที่ 5: ประเมินความเสี่ยงและภาระงาน"
+          "title": "วาระที่ 3: ปัญหาและข้อเสนอแนะในการทำงาน"
         }
       ],
       "attachments": [
         {
           "id": 1,
-          "name": "backlog.xlsx"
+          "name": "agenda_presentation.pdf"
         }
       ],
       "status": "completed"
+    },
+    {
+      "id": 12,
+      "code": "MEET-012",
+      "roomId": 3,
+      "organizerId": 46,
+      "title": "ประชุมประจำแผนก Government Team ครั้งที่ 3",
+      "date": "2026-07-21",
+      "start": "18:00",
+      "end": "19:30",
+      "locationMode": "hybrid",
+      "participantIds": [
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      "items": [
+        {
+          "id": 1,
+          "title": "วาระที่ 1: ติดตามงานค้างส่งของฝ่าย Government Team"
+        },
+        {
+          "id": 2,
+          "title": "วาระที่ 2: วางเป้าหมายการดำเนินงานรายไตรมาส"
+        },
+        {
+          "id": 3,
+          "title": "วาระที่ 3: ปัญหาและข้อเสนอแนะในการทำงาน"
+        }
+      ],
+      "attachments": [],
+      "status": "completed"
     }
   ],
-  "nextAgendaId": 5,
+  "nextAgendaId": 13,
   "minutes": [
     {
       "id": 1,
       "agendaId": 1,
-      "recorderId": 4,
+      "recorderId": 2,
       "status": "published",
-      "actualStart": "09:00",
-      "actualEnd": "11:30",
+      "actualStart": "08:00",
+      "actualEnd": "10:00",
       "actionItems": [
         {
           "id": 1,
-          "task": "ส่งสรุปงบการเงินปี 2025",
-          "ownerId": 21,
-          "dueDate": "2026-07-15",
+          "task": "จัดทำสรุปแผนการทำงานแผนก Management Team",
+          "ownerId": 1,
+          "dueDate": "2026-07-12",
           "done": true
         },
         {
           "id": 2,
-          "task": "ปรับโครงสร้างระบบจัดซื้อจัดจ้างใหม่",
-          "ownerId": 27,
-          "dueDate": "2026-07-20",
+          "task": "ประสานงานฝ่ายบุคคลเพื่อปรับปรุงข้อมูล Management Team",
+          "ownerId": 2,
+          "dueDate": "2026-07-12",
           "done": false
         }
       ]
@@ -1240,64 +1581,263 @@
     {
       "id": 2,
       "agendaId": 2,
-      "recorderId": 6,
+      "recorderId": 7,
       "status": "published",
       "actualStart": "10:00",
-      "actualEnd": "12:00",
+      "actualEnd": "11:30",
       "actionItems": [
         {
           "id": 3,
-          "task": "จัดเตรียมเอกสาร Proposal ส่งกรมสรรพสามิต",
-          "ownerId": 66,
-          "dueDate": "2026-07-18",
+          "task": "จัดทำสรุปแผนการทำงานแผนก Presales Engineer",
+          "ownerId": 6,
+          "dueDate": "2026-07-13",
           "done": true
+        },
+        {
+          "id": 4,
+          "task": "ประสานงานฝ่ายบุคคลเพื่อปรับปรุงข้อมูล Presales Engineer",
+          "ownerId": 7,
+          "dueDate": "2026-07-28",
+          "done": false
         }
       ]
     },
     {
       "id": 3,
       "agendaId": 3,
-      "recorderId": 13,
+      "recorderId": 9,
       "status": "published",
-      "actualStart": "14:00",
-      "actualEnd": "16:15",
+      "actualStart": "12:00",
+      "actualEnd": "14:00",
       "actionItems": [
         {
-          "id": 4,
-          "task": "ตรวจนับยอดคงค้างวัตถุดิบคลัง JAS",
-          "ownerId": 12,
-          "dueDate": "2026-07-22",
-          "done": false
+          "id": 5,
+          "task": "จัดทำสรุปแผนการทำงานแผนก Senior System Engineer  / Senior Network Engineer",
+          "ownerId": 8,
+          "dueDate": "2026-07-14",
+          "done": true
         },
         {
-          "id": 5,
-          "task": "สรุปรายงานค่าซ่อมบำรุงรถขนส่งสะสม",
-          "ownerId": 13,
-          "dueDate": "2026-07-23",
-          "done": true
+          "id": 6,
+          "task": "ประสานงานฝ่ายบุคคลเพื่อปรับปรุงข้อมูล Senior System Engineer  / Senior Network Engineer",
+          "ownerId": 9,
+          "dueDate": "2026-07-12",
+          "done": false
         }
       ]
     },
     {
       "id": 4,
       "agendaId": 4,
-      "recorderId": 44,
+      "recorderId": 12,
       "status": "published",
-      "actualStart": "13:00",
-      "actualEnd": "14:50",
+      "actualStart": "14:00",
+      "actualEnd": "15:30",
       "actionItems": [
         {
-          "id": 6,
-          "task": "ออกแบบ SVG Interactive Chart หน้ารายงาน",
-          "ownerId": 43,
-          "dueDate": "2026-07-24",
+          "id": 7,
+          "task": "จัดทำสรุปแผนการทำงานแผนก Stock / Logistic / Service Team",
+          "ownerId": 11,
+          "dueDate": "2026-07-15",
           "done": true
         },
         {
-          "id": 7,
-          "task": "ทดสอบระบบ Deployment บนคลาวด์ Render",
-          "ownerId": 44,
-          "dueDate": "2026-07-26",
+          "id": 8,
+          "task": "ประสานงานฝ่ายบุคคลเพื่อปรับปรุงข้อมูล Stock / Logistic / Service Team",
+          "ownerId": 12,
+          "dueDate": "2026-07-28",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "agendaId": 5,
+      "recorderId": 22,
+      "status": "published",
+      "actualStart": "16:00",
+      "actualEnd": "18:00",
+      "actionItems": [
+        {
+          "id": 9,
+          "task": "จัดทำสรุปแผนการทำงานแผนก Accounting / Messenger",
+          "ownerId": 21,
+          "dueDate": "2026-07-16",
+          "done": true
+        },
+        {
+          "id": 10,
+          "task": "ประสานงานฝ่ายบุคคลเพื่อปรับปรุงข้อมูล Accounting / Messenger",
+          "ownerId": 22,
+          "dueDate": "2026-07-12",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "agendaId": 6,
+      "recorderId": 26,
+      "status": "published",
+      "actualStart": "18:00",
+      "actualEnd": "19:30",
+      "actionItems": [
+        {
+          "id": 11,
+          "task": "จัดทำสรุปแผนการทำงานแผนก Human Resource",
+          "ownerId": 25,
+          "dueDate": "2026-07-17",
+          "done": true
+        },
+        {
+          "id": 12,
+          "task": "ประสานงานฝ่ายบุคคลเพื่อปรับปรุงข้อมูล Human Resource",
+          "ownerId": 26,
+          "dueDate": "2026-07-28",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "agendaId": 7,
+      "recorderId": 28,
+      "status": "published",
+      "actualStart": "08:00",
+      "actualEnd": "10:00",
+      "actionItems": [
+        {
+          "id": 13,
+          "task": "จัดทำสรุปแผนการทำงานแผนก Purchasing",
+          "ownerId": 27,
+          "dueDate": "2026-07-18",
+          "done": true
+        },
+        {
+          "id": 14,
+          "task": "ประสานงานฝ่ายบุคคลเพื่อปรับปรุงข้อมูล Purchasing",
+          "ownerId": 28,
+          "dueDate": "2026-07-12",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "agendaId": 8,
+      "recorderId": 30,
+      "status": "published",
+      "actualStart": "10:00",
+      "actualEnd": "11:30",
+      "actionItems": [
+        {
+          "id": 15,
+          "task": "จัดทำสรุปแผนการทำงานแผนก Sales Director / Sales Manager",
+          "ownerId": 29,
+          "dueDate": "2026-07-19",
+          "done": true
+        },
+        {
+          "id": 16,
+          "task": "ประสานงานฝ่ายบุคคลเพื่อปรับปรุงข้อมูล Sales Director / Sales Manager",
+          "ownerId": 30,
+          "dueDate": "2026-07-28",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "agendaId": 9,
+      "recorderId": 32,
+      "status": "published",
+      "actualStart": "12:00",
+      "actualEnd": "14:00",
+      "actionItems": [
+        {
+          "id": 17,
+          "task": "จัดทำสรุปแผนการทำงานแผนก Sales Team",
+          "ownerId": 31,
+          "dueDate": "2026-07-20",
+          "done": true
+        },
+        {
+          "id": 18,
+          "task": "ประสานงานฝ่ายบุคคลเพื่อปรับปรุงข้อมูล Sales Team",
+          "ownerId": 32,
+          "dueDate": "2026-07-12",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "agendaId": 10,
+      "recorderId": 39,
+      "status": "published",
+      "actualStart": "14:00",
+      "actualEnd": "15:30",
+      "actionItems": [
+        {
+          "id": 19,
+          "task": "จัดทำสรุปแผนการทำงานแผนก CMG Team",
+          "ownerId": 38,
+          "dueDate": "2026-07-21",
+          "done": true
+        },
+        {
+          "id": 20,
+          "task": "ประสานงานฝ่ายบุคคลเพื่อปรับปรุงข้อมูล CMG Team",
+          "ownerId": 39,
+          "dueDate": "2026-07-28",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "agendaId": 11,
+      "recorderId": 43,
+      "status": "published",
+      "actualStart": "16:00",
+      "actualEnd": "18:00",
+      "actionItems": [
+        {
+          "id": 21,
+          "task": "จัดทำสรุปแผนการทำงานแผนก Software & Developer",
+          "ownerId": 42,
+          "dueDate": "2026-07-22",
+          "done": true
+        },
+        {
+          "id": 22,
+          "task": "ประสานงานฝ่ายบุคคลเพื่อปรับปรุงข้อมูล Software & Developer",
+          "ownerId": 43,
+          "dueDate": "2026-07-12",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "agendaId": 12,
+      "recorderId": 47,
+      "status": "published",
+      "actualStart": "18:00",
+      "actualEnd": "19:30",
+      "actionItems": [
+        {
+          "id": 23,
+          "task": "จัดทำสรุปแผนการทำงานแผนก Government Team",
+          "ownerId": 46,
+          "dueDate": "2026-07-23",
+          "done": true
+        },
+        {
+          "id": 24,
+          "task": "ประสานงานฝ่ายบุคคลเพื่อปรับปรุงข้อมูล Government Team",
+          "ownerId": 47,
+          "dueDate": "2026-07-28",
           "done": false
         }
       ]
@@ -1306,19 +1846,89 @@
   "notifications": [
     {
       "id": 1,
-      "userId": 21,
-      "message": "คุณได้รับมอบหมายงาน: ส่งสรุปงบการเงินปี 2025",
+      "userId": 1,
+      "message": "คุณได้รับมอบหมายงานใหม่จากที่ประชุม Management Team",
       "read": true,
-      "createdAt": "2026-07-10T11:30:00.000Z"
+      "createdAt": "2026-07-10T12:00:00.000Z"
     },
     {
       "id": 2,
-      "userId": 27,
-      "message": "คุณได้รับมอบหมายงาน: ปรับโครงสร้างระบบจัดซื้อจัดจ้างใหม่",
+      "userId": 6,
+      "message": "คุณได้รับมอบหมายงานใหม่จากที่ประชุม Presales Engineer",
       "read": false,
-      "createdAt": "2026-07-10T11:30:00.000Z"
+      "createdAt": "2026-07-11T12:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "userId": 8,
+      "message": "คุณได้รับมอบหมายงานใหม่จากที่ประชุม Senior System Engineer  / Senior Network Engineer",
+      "read": true,
+      "createdAt": "2026-07-12T12:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "userId": 11,
+      "message": "คุณได้รับมอบหมายงานใหม่จากที่ประชุม Stock / Logistic / Service Team",
+      "read": false,
+      "createdAt": "2026-07-13T12:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "userId": 21,
+      "message": "คุณได้รับมอบหมายงานใหม่จากที่ประชุม Accounting / Messenger",
+      "read": true,
+      "createdAt": "2026-07-14T12:00:00.000Z"
+    },
+    {
+      "id": 6,
+      "userId": 25,
+      "message": "คุณได้รับมอบหมายงานใหม่จากที่ประชุม Human Resource",
+      "read": false,
+      "createdAt": "2026-07-15T12:00:00.000Z"
+    },
+    {
+      "id": 7,
+      "userId": 27,
+      "message": "คุณได้รับมอบหมายงานใหม่จากที่ประชุม Purchasing",
+      "read": true,
+      "createdAt": "2026-07-16T12:00:00.000Z"
+    },
+    {
+      "id": 8,
+      "userId": 29,
+      "message": "คุณได้รับมอบหมายงานใหม่จากที่ประชุม Sales Director / Sales Manager",
+      "read": false,
+      "createdAt": "2026-07-17T12:00:00.000Z"
+    },
+    {
+      "id": 9,
+      "userId": 31,
+      "message": "คุณได้รับมอบหมายงานใหม่จากที่ประชุม Sales Team",
+      "read": true,
+      "createdAt": "2026-07-18T12:00:00.000Z"
+    },
+    {
+      "id": 10,
+      "userId": 38,
+      "message": "คุณได้รับมอบหมายงานใหม่จากที่ประชุม CMG Team",
+      "read": false,
+      "createdAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": 11,
+      "userId": 42,
+      "message": "คุณได้รับมอบหมายงานใหม่จากที่ประชุม Software & Developer",
+      "read": true,
+      "createdAt": "2026-07-20T12:00:00.000Z"
+    },
+    {
+      "id": 12,
+      "userId": 46,
+      "message": "คุณได้รับมอบหมายงานใหม่จากที่ประชุม Government Team",
+      "read": false,
+      "createdAt": "2026-07-21T12:00:00.000Z"
     }
   ],
   "dbVersion": 2,
-  "nextMinuteId": 5
+  "nextMinuteId": 13
 }
