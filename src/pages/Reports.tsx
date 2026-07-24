@@ -1261,6 +1261,16 @@ export const Reports: React.FC = () => {
           const total = report7Data.reduce((acc, curr) => acc + curr.count, 0) || 1;
           return report7Data.map(d => ({ label: d.name, value: Math.round((d.count / total) * 100) }));
         }
+      case 8:
+        {
+          if (report8Data.length === 0) return [];
+          const onTime = report8Data.filter(d => d.status.includes("ตรงเวลา") || d.status.includes("สำเร็จ")).length;
+          const total = report8Data.length;
+          return [
+            { label: "ภายในกำหนด (SLA)", value: Math.round((onTime / total) * 100) },
+            { label: "ล่าช้าเกินกำหนด", value: Math.round(((total - onTime) / total) * 100) }
+          ];
+        }
       case 9:
         return report9Data.map(d => ({ label: d.name, value: d.pct }));
       case 10:
@@ -1271,6 +1281,19 @@ export const Reports: React.FC = () => {
           const maxDays = Math.max(...avgs, 1);
           return report11Data.map((d, idx) => ({ label: d.dept, value: Math.round((avgs[idx] / maxDays) * 100) }));
         }
+      case 12:
+        {
+          if (report12Data.length === 0) return [];
+          const deptsMap: Record<string, number> = {};
+          report12Data.forEach(d => {
+            deptsMap[d.dept] = (deptsMap[d.dept] || 0) + 1;
+          });
+          const total = report12Data.length;
+          return Object.keys(deptsMap).map(k => ({
+            label: k,
+            value: Math.round((deptsMap[k] / total) * 100)
+          }));
+        }
       case 13:
         return report13Data.map(d => ({ label: d.dept, value: d.pct }));
       case 14:
@@ -1280,7 +1303,8 @@ export const Reports: React.FC = () => {
         }
       case 15:
         {
-          const total = report15Data.length || 1;
+          if (report15Data.length === 0) return [];
+          const total = report15Data.length;
           const overrunCount = report15Data.filter(d => d.overrun !== "ตรงเวลา").length;
           return [
             { label: "ตรงเวลา", value: Math.round(((total - overrunCount) / total) * 100) },
@@ -1295,7 +1319,7 @@ export const Reports: React.FC = () => {
       default:
         return [];
     }
-  }, [selectedReportId, report1Data, report2Data, report3Data, report4Data, report5Data, report6Data, report7Data, report9Data, report10Data, report11Data, report13Data, report14Data, report15Data, report16Data]);
+  }, [selectedReportId, report1Data, report2Data, report3Data, report4Data, report5Data, report6Data, report7Data, report8Data, report9Data, report10Data, report11Data, report12Data, report13Data, report14Data, report15Data, report16Data]);
 
   const chartDataRight = useMemo(() => {
     // กราฟขวาเน้นค่าตัวเลขปริมาณดิบ (Absolute Volume/Count)
@@ -1314,12 +1338,16 @@ export const Reports: React.FC = () => {
         return report6Data.map(d => ({ label: d.name, value: d.count }));
       case 7:
         return report7Data.map(d => ({ label: d.name, value: d.count }));
+      case 8:
+        return report8Data.map(d => ({ label: d.code, value: parseFloat(d.duration) || 0 }));
       case 9:
         return report9Data.map(d => ({ label: d.name, value: d.pending }));
       case 10:
         return report10Data.map(d => ({ label: d.title, value: d.total }));
       case 11:
         return report11Data.map(d => ({ label: d.dept, value: parseFloat(d.avg) || 0 }));
+      case 12:
+        return report12Data.map(d => ({ label: d.task, value: Number(d.overdue) || 0 }));
       case 13:
         return report13Data.map(d => ({ label: d.dept, value: d.total }));
       case 14:
@@ -1337,7 +1365,7 @@ export const Reports: React.FC = () => {
       default:
         return [];
     }
-  }, [selectedReportId, report1Data, report2Data, report3Data, report4Data, report5Data, report6Data, report7Data, report9Data, report10Data, report11Data, report13Data, report14Data, report15Data, report16Data]);
+  }, [selectedReportId, report1Data, report2Data, report3Data, report4Data, report5Data, report6Data, report7Data, report8Data, report9Data, report10Data, report11Data, report12Data, report13Data, report14Data, report15Data, report16Data]);
 
 
   // ==========================================
