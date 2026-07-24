@@ -1601,17 +1601,31 @@ export const Reports: React.FC = () => {
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20, alignItems: "center" }}>
           <span style={{ fontSize: 12.5, fontWeight: 600, color: "var(--text-mute)", marginRight: 4 }}>ช่วงเวลาด่วน:</span>
           {[
+            { label: "วันนี้", type: "today" },
+            { label: "สัปดาห์นี้", type: "this-week" },
             { label: "เดือนนี้", type: "this-month" },
             { label: "ไตรมาสนี้", type: "this-quarter" },
+            { label: "ไตรมาสที่แล้ว", type: "last-quarter" },
             { label: "ปีนี้", type: "this-year" },
             { label: "ดูทั้งหมด (2026)", type: "all-time" }
           ].map((preset) => (
             <button
               key={preset.type}
               onClick={() => {
-                const today = new Date();
+                const today = new Date(todayStr);
                 const year = today.getFullYear();
-                if (preset.type === "this-month") {
+                if (preset.type === "today") {
+                  setStart(todayStr);
+                  setEnd(todayStr);
+                } else if (preset.type === "this-week") {
+                  const day = today.getDay();
+                  const diffToMonday = today.getDate() - day + (day === 0 ? -6 : 1);
+                  const monday = new Date(today.setDate(diffToMonday));
+                  const sunday = new Date(monday);
+                  sunday.setDate(monday.getDate() + 6);
+                  setStart(monday.toISOString().split("T")[0]);
+                  setEnd(sunday.toISOString().split("T")[0]);
+                } else if (preset.type === "this-month") {
                   const month = String(today.getMonth() + 1).padStart(2, '0');
                   setStart(`${year}-${month}-01`);
                   const lastDay = new Date(year, today.getMonth() + 1, 0).getDate();
@@ -1623,6 +1637,19 @@ export const Reports: React.FC = () => {
                   const endMonth = quarter * 3 + 3;
                   const lastDay = new Date(year, endMonth, 0).getDate();
                   setEnd(`${year}-${String(endMonth).padStart(2, '0')}-${String(lastDay).padStart(2, '0')}`);
+                } else if (preset.type === "last-quarter") {
+                  const currentQuarter = Math.floor(today.getMonth() / 3);
+                  let lastQuarter = currentQuarter - 1;
+                  let qYear = year;
+                  if (lastQuarter < 0) {
+                    lastQuarter = 3;
+                    qYear -= 1;
+                  }
+                  const startMonth = String(lastQuarter * 3 + 1).padStart(2, '0');
+                  setStart(`${qYear}-${startMonth}-01`);
+                  const endMonth = lastQuarter * 3 + 3;
+                  const lastDay = new Date(qYear, endMonth, 0).getDate();
+                  setEnd(`${qYear}-${String(endMonth).padStart(2, '0')}-${String(lastDay).padStart(2, '0')}`);
                 } else if (preset.type === "this-year") {
                   setStart(`${year}-01-01`);
                   setEnd(`${year}-12-31`);
